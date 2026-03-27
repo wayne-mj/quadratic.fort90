@@ -15,6 +15,9 @@ program main
   !> Format for irrational and ration results
   character (len=20), parameter   :: FMTIRRAT = "(A,F35.20,A,A,A,A,A)"
   character (len=10), parameter   :: FMTRAT = "(A,F35.20)"
+  character (len=27), parameter   :: FMTGEN = "(F5.2,A,F5.2,A,F5.2,A,F5.2)"
+  character (len=6)               :: b_str
+  character (len=4)               :: c_str
    
   !> ax^2 + bx + c -> (-b +/- sqrt(b^2 - 4ac)) / 2a
   a = 2.
@@ -22,7 +25,25 @@ program main
   c = -5.
 
   qt = quad(a,b,c)
-  
+
+  !> Set the function operations accordingly
+  !> If b is in less than zero other wise the other way
+  if (b .lt. 0) then
+    b_str = " x^2 "
+  else 
+    b_str = " x^2 +"
+  end if
+
+  !> If c is less than zero other wise the other way
+  if (c .lt. 0) then
+    c_str = " x "
+  else 
+    c_str = " x +"
+  end if
+
+  !> Display the function
+  write (*,*) "For the function:"
+  write (*, FMTGEN) a,b_str,b,c_str ,c, " = ", 0.
   
   !> Display the results for irrational results
   if (qt%irrat) then
